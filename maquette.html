@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
+	<title>fullPage.js One Page Scroll Sites</title>
+	<meta name="author" content="Emilie Lucas, Thomas Gratier" />
+	<meta name="description" content="Maquette pour suivre l'évolution des votes au cours des élections municipales 2015 de la ville de Nantes." />
+	<meta name="keywords"  content="election,nantes,democratie,opendata" />
+	<meta name="Resource-type" content="Document" />
+
+	
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/example3.css" />
+
+	<!--[if IE]>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
+		</script>
+	<![endif]-->
+		
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>	
+	
+	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var pepe = $.fn.fullpage({
+				slidesColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
+				anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', '5thpage', '6thpage', 'lastPage'],
+				menu: '#menu'
+			});
+		});
+	</script>
+
+</head>
+<body>
+
+<ul id="menu">
+	<li data-menuanchor="firstPage"><a href="#firstPage">Présentation</a></li>
+	<li data-menuanchor="secondPage"><a href="#secondPage">Démarche</a></li>
+	<li data-menuanchor="3rdPage"><a href="#3rdPage">Mise en oeuvre</a></li>
+	<li data-menuanchor="4thpage"><a href="#4thpage">Accueil</a></li>
+	<li data-menuanchor="5thpage"><a href="#5rdPage">Fréquentation</a></li>
+	<li data-menuanchor="6thpage"><a href="#6thpage">Affluence</a></li>
+    <li data-menuanchor="lastPage"><a href="#lastPage">Contribuez</a></li>
+</ul>
+
+<div class="section active" id="section0">
+	<h1>S’INFORMER: ÉVOLUTION DE LA MOBILISATION DANS LES BUREAUX DE VOTE</h1>
+    <h2>Le contexte</h2>
+    <p> Projet dans le cadre du hackaton de l'atelier des Elections organisé le week-end du 1er et 2 février 2014</p>
+    <h2>Le but visé</h2>
+    <p>Permettre de suivre au cours de la journée la mobilisation dans les différents bureaux de vote</p>
+</div>
+<div class="section" id="section1">
+    <div class="slide active">
+		<div class="intro">
+			<h1>La démarche</h1>
+		</div>
+	</div>
+    <div class="slide">
+		<div class="intro">
+			<h1>Inventorier l'existant</h1>
+			<h2>La donnée existante</h2>
+			<h2>Celle à acquérir</h2>
+		</div>
+	</div>
+    <div class="slide">
+		<div class="intro">
+			<h1>Définir la communication</h1>
+		</div>
+	</div>
+    <div class="slide">
+		<div class="intro">
+			<h1>Créer un "produit"</h1>
+		</div>
+	</div>
+</div>
+<div class="section" id="section2">
+    <div class="slide active">
+		<div class="intro">
+			<h1>Des méthodes et des outils</h1>
+		</div>
+	</div>
+    <div class="slide">
+	    <div class="intro">
+		    <h1>Du Web</h1>
+            <h2>Un compte Twitter</h2>
+            <h2>Un site web</h2>
+        </div>
+    </div>
+    <div class="slide">
+		<div class="intro">
+			<h1>De l'acquisition</h1>
+		</div>
+    <img src="images/schema.png" alt="Twitter et SMS via USHAHIDI pour mettre à jour le site web" />
+	</div>
+    <div class="slide">
+	    <div class="intro">
+		    <h1>De la valorisation</h1>
+            <h2>Utilisation et production d'OpenData</h2>
+            <h2>De la "Dataviz": graphiques et cartes</h2>
+        </div>
+    </div>
+</div>
+<div class="section" id="section3">
+    <img src="images/accueil.png" alt="tablets" />	
+</div>
+
+<div class="section" id="section4">
+    <div class="slide active">
+    <img src="images/frequentation.png" alt="tablets" />
+    </div>
+    <div class="slide">
+    <img src="images/frequentation2.png" alt="tablets" />
+    </div>
+    </div>
+</div>
+
+<div class="section" id="section5">
+    <img src="images/affluence.png" alt="tablets" />
+</div>
+
+<div class="section" id="section6">
+    <img src="images/contribuez.png" alt="tablets" />
+</div>
+
+</body>
+</html>

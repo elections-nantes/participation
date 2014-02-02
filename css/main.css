@@ -1,0 +1,25 @@
+ul#menu {
+list-style-type: none;
+width: 100%; /* pr�cision pour Opera */
+}
+
+ul#menu li {
+float: left;
+}
+
+ul#menu a {
+float: left;
+margin: 0 2px;
+padding: 5px 15px;
+text-align: center;
+/*border: 1px solid gray;*/
+text-decoration: none;
+color: #0c1e36;
+/*background: #fff;*/
+}
+
+ul#menu a:hover {
+background: #ccc;
+border: 1px solid gray; 
+}
+
