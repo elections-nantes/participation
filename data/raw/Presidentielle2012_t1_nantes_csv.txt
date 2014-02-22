@@ -1,0 +1,79 @@
+
+================================================
+TITRE DU JEU DE DONNEES
+================================================
+
+Résultats du premier tour de l'élection présidentielle 2012 à Nantes
+
+================================================
+DESCRIPTION
+================================================
+Les résultats du 1er tour de l'élection présidentielle sont indiqués par bureau de vote.
+Les voix obtenues par chaque candidat à Nantes sont précisées. Sont également fournis : le
+nombre d'électeurs inscrits, le nombre de votants, de procurations, de bulletins nuls et
+de bulletins exprimés.
+
+Thèmes 							: Citoyenneté / Institution
+
+================================================
+INFORMATIONS TECHNIQUES
+================================================
+
+Date de dernière mise à jour    : 12/12/2012
+Fréquence de mise à jour 		: Publication unique
+Couverture Temporelle : Sans objet 
+
+Derniere mise à jour technique	:
+
+	Date : 13/12/2012
+	Nature de la modification : Mise en ligne des données
+	Description de la modification : Création
+
+================================================
+ATTRIBUTS
+================================================
+
+
+BUREAU_DE_VOTE : Identification du bureau de vote
+INSCRITS       : Nombre d'inscrits
+PROCURATIONS   : Nombre de procurations effectuées
+VOTANTS        : Nombre de votants
+NULS           : Nombre de bulletins nuls
+EXPRIMES       : Nombre de bulletins exprimés
+JOLY           : Nombre de voix obtenues par Mme JOLY
+LE_PEN         : Nombre de voix obtenues par Mme LE PEN
+SARKOZY        : Nombre de voix obtenues par M SARKOZY
+MELENCHON      : Nombre de voix obtenues par M MELENCHON
+POUTOU         : Nombre de voix obtenues par M POUTOU
+ARTHAUD        : Nombre de voix obtenues par Mme ARTHAUD
+CHEMINADE      : Nombre de voix obtenues par M CHEMINADE
+BAYROU         : Nombre de voix obtenues par M BAYROU
+DUPONT_AIGNAN  : Nombre de voix obtenues par M DUPONT-AIGNAN
+HOLLANDE       : Nombre de voix obtenues par M HOLLANDE
+ 
+
+================================================
+CONTACT
+================================================
+
+Pour toute demande d'information ou remarque, 
+merci de passer par le forum du site http://data.nantes.fr
+
+================================================
+INFORMATIONS LEGALES
+================================================
+
+
+Propriétaire : Ville de Nantes
+
+Gestionnaire : Ville de Nantes
+
+Diffuseur	 : Nantes Métropole
+
+Licence      : Open Database License (ODbL)
+
+================================================
+SIGNATURES DES FICHIERS
+================================================
+
+PRESIDENTIELLE2012_T1_NANTES.csv (md5) : a5ac8df734793b11efca1de161dca979

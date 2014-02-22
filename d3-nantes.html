@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+ 
+    .departement {
+        cursor: pointer;
+    }
+ 
+    .departement:hover {
+        stroke: white;
+        stroke-width: 1px;
+    }
+    .active {
+        stroke: green;
+        stroke-width: 1px;
+    }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="contenu"></div>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
+<script type="text/javascript">
+(function() {
+ 
+  var width = 800;
+  var height = 542;
+ 
+  /*
+   * On créait un nouvel objet path qui permet
+   * de manipuler les données géographiques.
+   */
+  var path = d3.geo.path();
+ 
+  // On définit les propriétés de la projection à utiliser
+  var projection = d3.geo.conicConformal() // Lambert-93
+          .center([-1.555, 47.2375]) // On centre la carte sur la France
+          .scale(280000)
+          .translate([width / 2, height / 2]);
+ 
+  path.projection(projection); // On assigne la projection au path
+ 
+  /*
+   * On créait un nouvel élément svg à la racine de notre div #map,
+   * définie plus haut dans le HTML
+   */
+  var svg = d3.select('#map').append("svg")
+      .attr("width", width)
+      .attr("height", height);
+ 
+  /*
+   * On créait un groupe SVG qui va accueillir
+   * tous nos départements
+   */
+  var deps = svg
+        .append("g");
+      //.attr("id", "departements");
+ 
+  /*
+   * On charge les données GeoJSON
+   */
+  d3.json('data/geo/bureaux-votes-nantes.geojson', function(req, geojson) {
+
+// load and display the cities
+d3.csv("data/geo/lieux_votes_inscrits_2008_municipales.csv", function(error, data) {
+    deps.selectAll("circle")
+       .data(data)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d) {
+               return projection([d.X, d.Y])[0];
+       })
+       .attr("cy", function(d) {
+               return projection([d.X, d.Y])[1];
+       })
+       .attr("r", function(d) {
+               return d.inscrits/(Math.PI * Math.sqrt(1000));
+       })
+       .style("fill", "red");
+});
+
+//S = 2 x 3,14 (PI) x R (rayon = diamètre / 2)
+
+    /*
+     * On "bind" un élément SVG path pour chaque entrée
+     * du tableau features de notre objet geojson
+     */
+    var features = deps
+            .selectAll("path")
+                .data(geojson.features);
+ 
+        /*
+     * On créait un ColorScale, qui va nous
+     * permettre d'assigner plus tard une
+     * couleur de fond à chacun de nos
+     * départements
+     */
+    var colorScale = d3.scale.category20c();
+ 
+    /*
+     * Pour chaque entrée du tableau feature, on
+     * créait un élément SVG path, avec les
+     * propriétés suivantes
+     */
+    features.enter()
+        .append("path")
+            .attr('class', 'departement')
+            .attr('fill', function(d) {
+                return colorScale(+d.properties.CODE_DEPT);
+            })
+          .attr("d", path)
+          .on('click', countyClickHandler);
+ 
+  });
+ 
+  /*
+   * Fonction qui permet de zoomer sur la carte
+   * en cliquant sur les départements
+   * Récupéré ici : http://bl.ocks.org/mbostock/2206340
+   */
+  var centered;
+  function countyClickHandler(d) {
+    var x, y, k;
+ 
+    if (d && centered !== d) {
+            var centroid = path.centroid(d);
+            x = centroid[0];
+            y = centroid[1];
+            k = 5;
+            centered = d;
+        } else {
+            x = width / 2;
+            y = height / 2;
+            k = 1;
+            centered = null;
+        }
+ 
+        deps.selectAll("path")
+            .classed("active", centered && function(d) { return d === centered; });
+        
+        document.getElementById('contenu').innerHTML = d.properties.IDBURO + " " + d.properties.LIEU_NOM + " " + d.properties.LIEU_SITE + " " + d.properties.LIEU_ADRES;
+
+    
+        var trStr = "translate(" + width / 2 + "," + height / 2 + ")" +
+            "scale(" + k + ")translate(" + -x + "," + -y + ")";
+         
+        deps.transition()
+            .duration(1000)
+            .attr("transform", trStr);
+ 
+    };
+ 
+}());
+</script>
+</body>
+</html>

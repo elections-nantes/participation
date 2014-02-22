@@ -1,0 +1,71 @@
+
+================================================
+TITRE DU JEU DE DONNEES
+================================================
+
+Résultats du second tour de l'élection présidentielle 2012 à Nantes
+
+================================================
+DESCRIPTION
+================================================
+Les résultats du second tour de l'élection présidentielle sont indiqués par bureau de
+vote. Les voix obtenues par chaque candidat à Nantes sont précisées. Sont également
+fournis : le nombre d'électeurs inscrits, le nombre de votants, de procurations, de
+bulletins nuls et de bulletins exprimés.
+
+Thèmes 							: Citoyenneté / Institution
+
+================================================
+INFORMATIONS TECHNIQUES
+================================================
+
+Date de dernière mise à jour    : 12/12/2012
+Fréquence de mise à jour 		: Publication unique
+Couverture Temporelle : Sans objet 
+
+Derniere mise à jour technique	:
+
+	Date : 13/12/2012
+	Nature de la modification : Mise en ligne des données
+	Description de la modification : Création
+
+================================================
+ATTRIBUTS
+================================================
+
+
+BUREAU_DE_VOTE : Identification du bureau de vote
+INSCRITS       : Nombre d'inscrits
+PROCURATIONS   : Nombre de procurations effectuées
+VOTANTS        : Nombre de votants
+NULS           : Nombre de bulletins nuls
+EXPRIMES       : Nombre de bulletins exprimés
+SARKOZY        : Nombre de voix obtenues par M SARKOZY
+HOLLANDE       : Nombre de voix obtenues par M HOLLANDE
+ 
+
+================================================
+CONTACT
+================================================
+
+Pour toute demande d'information ou remarque, 
+merci de passer par le forum du site http://data.nantes.fr
+
+================================================
+INFORMATIONS LEGALES
+================================================
+
+
+Propriétaire : Ville de Nantes
+
+Gestionnaire : Ville de Nantes
+
+Diffuseur	 : Nantes Métropole
+
+Licence      : Open Database License (ODbL)
+
+================================================
+SIGNATURES DES FICHIERS
+================================================
+
+PRESIDENTIELLE2012_T2_NANTES.csv (md5) : d0454e54fc38c196e64a9ac1b46ce16d

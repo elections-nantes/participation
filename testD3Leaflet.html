@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>D3 + Leaflet</title>
+<style>
+
+@import url(http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css);
+
+#map {
+  width: 960px;
+  height: 500px;
+}
+
+svg {
+  position: relative;
+}
+
+path {
+  fill: #000;
+  fill-opacity: .2;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+path:hover {
+  fill: brown;
+  fill-opacity: .7;
+}
+
+</style>
+
+<header>
+  <aside>June 19, 2012</aside>
+  <a href="../" rel="author">Mike Bostock</a>
+</header>
+
+
+<p id="map">
+
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<script>
+
+//var map = new L.Map("map", {center: [37.8, -96.9], zoom: 4})
+var initialZoom = 12;
+var map = new L.Map("map", {center: [47.2375, -1.655], zoom: initialZoom})
+    .addLayer(new L.TileLayer("http://{s}.tile.cloudmade.com/1a1b06b230af4efdbb989ea99e9841af/998/256/{z}/{x}/{y}.png"));
+
+var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+//d3.json("us-states.json", function(collection) {
+d3.json("data/geo/bureaux-votes-nantes.geojson", function(collection) {
+  var transform = d3.geo.transform({point: projectPoint}),
+      path = d3.geo.path().projection(transform),
+      bounds = path.bounds(collection);
+
+      console.log(bounds);
+
+  var feature = g.selectAll("path")
+      .data(collection.features)
+    .enter().append("path");
+
+  map.on("moveend", reset);
+  reset();
+
+  // Reposition the SVG to cover the features.
+  function reset() {
+      var bounds = path.bounds(collection);
+
+    var topLeft = bounds[0],
+        bottomRight = bounds[1];
+        console.log("abc");
+    
+    svg .attr("width", bottomRight[0] - topLeft[0])
+        .attr("height", bottomRight[1] - topLeft[1])
+        .style("left", topLeft[0] + "px")
+        .style("top", topLeft[1] + "px");
+
+    g   .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+    feature.attr("d", path);
+  }
+
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint(x, y) {
+    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+});
+
+</script>

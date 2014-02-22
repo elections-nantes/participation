@@ -1,0 +1,12 @@
+{
+   "layers": [{
+       "src": "data/geo/DECOUPAGE_BUREAUX_VOTE_NANTES_WGS84.shp",
+       "id": "bureaux-votes-nantes",
+       "attributes": ["IDBURO"]
+    }],
+   "proj": {
+       "id": "laea",
+       "lon0": -1.555,
+       "lat0": 47.2375
+   }
+}
