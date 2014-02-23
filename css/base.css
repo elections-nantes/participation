@@ -1,184 +1,148 @@
-/* ==============================================
-   FEUILLE DE STYLES DES GABARITS HTML/CSS
-   © Elephorm & Alsacreations.com
-   Conditions d'utilisation:
-   http://creativecommons.org/licenses/by/2.0/fr/
-   ============================================== */
+@import url(http://fonts.googleapis.com/css?family=Muli);
+@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:200);
 
-
-/* --- STYLES DE BASE POUR LE TEXTE ET LES PRINCIPAUX ÉLÉMENTS --- */
-
-/* Page */
-html {
-	font-size: 100%; /* Voir -> Note 1 à la fin de la feuille de styles. */
-}
-body {
-	margin: 0;
-	padding: 10px 20px; /* Note -> 2 */
-	font-family: Verdana, "Bitstream Vera Sans", "Lucida Grande", sans-serif; /* 3 */
-	font-size: .8em; /* -> 4 */
-	line-height: 1.25; /* -> 5 */
-	color: black;
-	background: white;
+#ie{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: #e74c3c;
+	top: 0;
+	overflow: hidden;
+	color: white;
+	text-align: center;
+	padding-top: 10%;
 }
 
-/* Titres */
+html, body {
+	font-size: 100%;
+	margin: 0 auto;
+	padding: 0 auto;
+	background: #383838;
+	font-family: arial;
+}
+/* liens */
+a{
+	text-decoration: none;
+	color: white;
+}
+/* les fonts */
 h1, h2, h3, h4, h5, h6 {
-	margin: 1em 0 .5em 0; /* -> 6 */
-}
-h1, h2 {
-	font-family: Georgia, "Bitstream Vera Serif", Norasi, serif;
-	font-weight: normal; /* -> 7 */
+	margin: 0 auto;
+	padding: 0 auto;
+	text-align: center;
+	color: white;
+
 }
 h1 {
-	font-size: 3em; /* -> 8 */
-	font-style: italic;
+	font-size: 3em;
+	font-family: 'Muli', sans-serif;
+	padding: 25px 0px 5px 0px;
 }
-h2 {font-size: 1.8em;}
-h3 {font-size: 1.2em;}
-h4 {font-size: 1em;}
-
-/* Listes */
-ul, ol {
-	margin: .75em 0 .75em 24px;
-	padding: 0; /* -> 9 */
+h2 {
+	font-size: 1.5em;
+	font-family: 'Yanone Kaffeesatz', sans-serif;
 }
-ul {
-	list-style: square;
+h3 {
+	color: #e74c3c;
+	border-top: solid 2px;
+	border-bottom: solid 2px;
+	padding: 10px;
+	margin: 0 auto;
+	text-align: justify center;
+	margin: 0px 10% 0px 10%;
 }
-li {
-	margin: 0;
-	padding: 0;
-}
-
-/* Paragraphes */
-p {
-	margin: .75em 0;
-}
-li p, blockquote p {
-	margin: .5em 0;
-}
-
-/* Citations */
-blockquote, q {
-	font-size: 1.1em;
-	font-style: italic;
-	font-family: Georgia, "Bitstream Vera Serif", Norasi, serif;
-}
-blockquote {
-	margin: .75em 0 .75em 24px;
-}
-cite {
-	font-style: italic;
+h4 {
+	border: dashed 2px #a3a3a3;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	margin: 0 auto;
+	text-align: center;
+	color: #3b3b3b;
+	margin: 20px 15% 0px 15%;
 }
 
-/* Liens */
-a {
-	color: mediumblue;
-	text-decoration: underline;
+header {
 }
-a:hover, a:focus {
-	color: crimson;
-}
-a img {
-	border: none; /* -> 10 */
-}
+	#title {
+		background: #e74c3c;
+		margin:0px 5px 0px 10px;
+		padding-bottom: 20px;
+		border-top: solid 2px #c0392b;
+	}
+	#menu {
+    	padding: 0; margin: 0;  
+    	text-align: center;
+		background: white;
+		font-family: 'Muli', sans-serif;
+		padding-top: 10px;
+		height: 30px;
+	}
+		#menu li, #menu li a {
+			display: inline;  
+    		list-style: none;
+    		font-size: 100%;
+			color: #c0392b;  
+		}
+		#menu li a {
+			padding: 10px 12px 10px 12px;
+		}
+		#menu li a:hover {
+			background-color: #c0392b;
+			color: white;
+			height: 40px;
+		}
+		.home{
+			height: 15px;
+		}
+	#bandeau1 {
+		width: 15px;
+		float: left;
+	}
+	#bandeau2 {
+		width: 15px;
+		float: right;
+	}
 
-/* Divers éléments de type en-ligne */
-em {
-	font-style: italic;
-}
-strong {
-	font-weight: bold;
-	color: dimgray;
-}
 
-
-/* --- STYLES POUR CERTAINS CONTENUS DES GABARITS --- */
-
-pre, code {
-	font-size: 100%;
-	font-family: "Bitstream Vera Mono", "Lucida Console", "Courier New", monospace;
+#main {
+	margin:0px 10px 0px 10px;
+	background: #e1e1e1;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
-pre {
-	width: 90%;
-	overflow: auto;
-	overflow-y: hidden;
-	margin: .75em 0;
-	padding: 12px;
-	background: #eee;
-	color: #555;
+#main:before,
+#main:after {
+    content:"";
+    display:table;
 }
-pre strong {
-	font-weight: normal;
-	color: black;
-}
-#copyright {
-	margin: 20px 0 5px 0;
-	text-align: right;
-	font-size: .8em;
-	color: #848F63;
-}
-#copyright a {
-	color: #848F63;
-	text-decoration: none;
-}
-#copyright a:hover, #copyright a:focus {
-	text-decoration: underline;
+#main:after {
+    clear:both;
 }
 
 
-/* --- NOTES ---
+#main {
+    zoom:1;
+}
 
-1.	Ce "font-size: 100%" est normalement inutile. On l'utilise uniquement
-	pour éviter un bug de redimensionnement du texte dans Internet Explorer.
+	/* Template Accueil */
+	.accueil-illu {
+		margin: 0 auto;
+		height: 400px;
+		margin: 20px;
+	}
 
-2.	Par défaut, les navigateurs ont un padding (ou, pour certains, un
-	margin) de 6px pour l'élément BODY. C'est ce qui évite que le texte
-	ne soit complètement collé aux bords de la zone de visualisation du
-	navigateur lorsqu'on affiche une page «brute», sans mise en forme.
-	Mais ce retrait de 6px est un peu faiblard: on le renforce donc.
-	Notez bien que les feuilles de styles des gabarits pourront augmenter
-	ce retrait, ou bien l'annuler.
-	
-3.	Voici quelques exemples de collections cohérentes de fontes (propriété
-	CSS "font-family"):
-	font-family: Arial, Helvetica, "Nimbus Sans L", sans-serif;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-family: Georgia, "Bitstream Vera Serif", Norasi, serif;
-	font-family: "Times New Roman", Times, "Nimbus Roman No9 L", serif;
-		
-4.	Taille du texte de base de la page. Dépend de la taille du texte par
-	défaut du navigateur (souvent 16px), et des réglages de l'utilisateur.
-	À adapter en fonction de la fonte choisie, et du rendu souhaité.
-	En général, on utilisera une valeur de base entre .65em et 1em
-	(ou 65% et 100%).
 
-5.	Hauteur de ligne. À adapter en fonction de la fonte choisie, et des
-	besoins particuliers (lignes de texte longues ou courtes, titre ou
-	corps de texte...).
-
-6.	En général, les styles par défaut des navigateurs font que les marges
-	en haut et en bas des titres sont équivalentes. Ici, en diminuant la
-	marge du bas, on cherche à rapprocher le titre du contenu qu'il introduit.
-
-7.	Les styles par défaut des navigateurs mettent les titres en gras.
-	Si on souhaite passer à des caractères «normaux», on doit utiliser
-	font-size: normal.
-
-8.	Pour un élément en "font-size: 3em", la taille du texte sera le triple de
-	la taille du texte de l'élément parent.
-	À noter: on aurait pu écrire "font-size: 300%" pour le même résultat.
-
-9.	Par défaut, les listes UL et OL ont un retrait à gauche qui peut être,
-	suivant les navigateurs:
-	- un padding-left de 40px;
-	- ou bien un margin-left de 40px.
-	On met tout le monde d'accord avec une marge à gauche de 24px, et pas
-	de padding.
-
-10.	Les navigateurs donnent souvent aux images placées dans des liens
-	une bordure disgracieuse. On annule ce style souvent gênant en appliquant
-	un "border: none" aux images qui se trouvent à l'intérieur d'un lien.
-
-*/
+	/* Template Sidebar */
+	#navigation {
+		padding: 0px 1% 0px 1%;
+		border-right: dotted 2px #807d7d;
+	    width: 20%;
+	    float: left;
+	    text-align:justify;
+	}
+	#content-side {
+		padding: 0px 1% 0px 1%;
+		width: 75%;
+		float: left;
+		text-align:justify;
+	}

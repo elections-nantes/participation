@@ -1,0 +1,5 @@
+"c:\Program Files (x86)\GnuWin32\bin\wget.exe" -O index.html "http://localhost/MobilisezVousLink/index.php?include=accueil"
+"c:\Program Files (x86)\GnuWin32\bin\wget.exe" -O frequentation.html "http://localhost/MobilisezVousLink/index.php?include=frequentation"
+"c:\Program Files (x86)\GnuWin32\bin\wget.exe" -O affluence.html "http://localhost/MobilisezVousLink/index.php?include=affluence"
+"c:\Program Files (x86)\GnuWin32\bin\wget.exe" -O contribuez.html "http://localhost/MobilisezVousLink/index.php?include=contribuez"
+"c:\Program Files (x86)\GnuWin32\bin\wget.exe" -O apropos.html "http://localhost/MobilisezVousLink/index.php?include=apropos"
