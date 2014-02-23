@@ -5,9 +5,8 @@
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-<style>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <style>
     #map {
       width: 700px;
       height: 500px;
@@ -42,27 +41,99 @@
         margin-right: 8px;
         opacity: 0.7;
     }
-</style>
+    /* TypeAhead */
 
+    .typeahead,
+    .tt-query,
+    .tt-hint {
+      width: 396px;
+      height: 30px;
+      padding: 8px 12px;
+      font-size: 24px;
+      line-height: 30px;
+      border: 2px solid #ccc;
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      outline: none;
+    }
+
+    .typeahead {
+      background-color: #fff;
+    }
+
+    .typeahead:focus {
+      border: 2px solid #0097cf;
+    }
+
+    .tt-query {
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+         -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .tt-hint {
+      color: #999
+    }
+
+    .tt-dropdown-menu {
+      width: 422px;
+      margin-top: 12px;
+      padding: 8px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+
+    .tt-suggestion {
+      padding: 3px 20px;
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .tt-suggestion.tt-cursor {
+      color: #fff;
+      background-color: #0097cf;
+
+    }
+    </style>
 </head>
 <body>
-    <div id="mylist"></div>
     <div id="map"></div>
+
+
+      <div class="example example-numbers">
+        <div class="demo">
+          <input class="typeahead" type="text" placeholder="numbers (1-10)">
+        </div>
+      </div>
+
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.0.0/leaflet-omnivore.min.js'></script>
     <script src="js/simple_statistics.js"></script>
+    <script src="js/chroma.min.js"></script>
     <script src="js/leaflet.ajax.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/typeahead.bundle.js"></script>
 
     <script type="text/javascript">
-
+        // Initialisation de l'emprise initiale et de la carte
         var initialBounds = new L.latLngBounds(new L.latLng(47.18, -1.64), new L.latLng(47.295, -1.47));
-            var map = L.map('map', {
-                center: [47.2375, -1.555],
-                zoom: 12,
-                maxZoom: 16,
-                minZoom: 11
-            });
+        var map = L.map('map', {
+            center: [47.2375, -1.555],
+            zoom: 12,
+            maxZoom: 16,
+            minZoom: 11
+        });
 
+        // Ajout du fond de carte
         L.tileLayer('http://{s}.acetate.geoiq.com/tiles/' + 'terrain' + '/{z}/{x}/{y}' + '.png', {
             //maxZoom: 18,
             opacity: 0.4,
@@ -75,7 +146,7 @@
         }).addTo(map);
 
 
-        // control that shows state info on hover
+        // Controle permettant d'afficher les informations au survol
         var info = L.control();
 
         info.onAdd = function (map) {
@@ -85,34 +156,51 @@
         };
 
         info.update = function (props) {
-            this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
-                '<b>' + '' + '</b><br />' + props.IDOBJ + ' ' + props.IDBURO /*+ props.NUMERO + props.LIEU_VOT + props.LIEU_NOM + props.LIEU_SITE + props.LIEU_ADRES + props.CODCOM + props.COMMUNE*/ + ' people / mi<sup>2</sup>'
-                : 'Hover over a state');
+            this._div.innerHTML = (props ? '<h4> Bureau ' + props.IDBURO + ' - Année 2008</h4>' +
+                '<i><b>Adresse</b></i>:' + props.LIEU_SITE + ' ' + props.LIEU_NOM + '<br />' + props.LIEU_ADRES + '<br />' +
+                '<i><b>Nombre de votants</b></i>: ' + props.resultats_2008_municipales_VOT2008 + '<br />' +
+                '<i><b>Nombre d\'inscrits</b></i>: ' + props.resultats_2008_municipales_INS2008 + ' '  + '<br />' +
+                '<i><b>Pourcentage de votants</b></i>: ' + props.resultats_2008_municipales_VOT2008P + '%'
+                : 'Survolez un bureau de vote');
         };
 
         info.addTo(map);
 
+        var myJson = {};
+
+        function returnCoupletInfo(d) {
+            for (var i = 0; i < myJson.couples.length - 1; i++) {
+                var couplet = myJson.couples.slice(i, i + 2);
+                var returnValue = {couplet : couplet};
+                if (i < (myJson.couples.length - 2)) {
+                    if (d >= couplet[0] && d < couplet[1]){
+                        returnValue["position"] = i;
+                        return returnValue;
+                    }
+                } else {
+                    couplet = myJson.couples.slice(i, i + 1);
+                        returnValue["position"] = i;
+                        return returnValue;
+                }
+            }
+        };
 
         // get color depending on population density value
         function getColor(d) {
-            return d > 90 ? '#800026' :
-                   d > 80  ? '#BD0026' :
-                   d > 70  ? '#E31A1C' :
-                   d > 60  ? '#FC4E2A' :
-                   d > 50   ? '#FD8D3C' :
-                   d > 40   ? '#FEB24C' :
-                   d > 20   ? '#FED976' :
-                              '#FFEDA0';
+            var valuePosition = returnCoupletInfo(d);
+            var colorRanges = chroma.brewer.OrRd.slice(0,7);
+            var colorRanges = chroma.brewer.Purples.slice(0,7);
+
+            var retour = colorRanges[valuePosition.position];
+            return retour;
         }
-
         function style(feature) {
-
             return {
-                weight: 2,
+                weight: 1,
                 opacity: 1,
                 color: 'white',
                 dashArray: '3',
-                fillOpacity: 0.7,
+                fillOpacity: 0.9,
                 fillColor: getColor(feature.properties.resultats_2008_municipales_VOT2008P)
             };
         }
@@ -123,7 +211,7 @@
             var layer = e.target;
 
             layer.setStyle({
-                weight: 5,
+                weight: 2,
                 color: '#666',
                 dashArray: '',
                 fillOpacity: 0.7
@@ -142,7 +230,10 @@
         }
 
         function zoomToFeature(e) {
-            map.fitBounds(e.target.getBounds());
+            var center = e.target.getBounds()
+                           .getCenter();
+            map.setView(center, 14);
+            //map.fitBounds(e.target.getBounds());
         }
 
         function onEachFeature(feature, layer) {
@@ -152,47 +243,121 @@
                 click: zoomToFeature
             });
         }
-    /*
-        test = geojson.toGeoJSON().features;
-        test1 = test.map(function(element, index, array) {
-            return element.properties.resultats_2008_municipales_VOT2008P;
+
+        // Chargement de la couche GeoJSON
+        L.Util.ajax("data/geo/bureaux-votes-nantes-2008.geojson").then(function(data){
+            var dataPourcents = data.features.map(function(element, index, array) {
+                return element.properties.resultats_2008_municipales_VOT2008P;
+            });
+            var dataPourcents = data.features.map(function(element, index, array) {
+                return element.properties.resultats_2008_municipales_VOT2008P;
+            });
+
+            myJson.couples = ss.jenks(dataPourcents, 7);
+
+            geojson = L.geoJson(data, {
+                style: style,
+                onEachFeature: onEachFeature
+            });
+
+            map.addLayer(geojson);
+
+            addLegend();
+
         });
-        */
-        //var geojsonLayer = new L.GeoJSON.AJAX("data/geo/bureaux-votes-nantes-2008.geojson");
-        geojson = new L.GeoJSON.AJAX("data/geo/bureaux-votes-nantes-2008.geojson", {
-            style: style,
-            onEachFeature: onEachFeature
+
+        //Ajout des crédits
+        map.attributionControl.addAttribution('Données <a href="http://data.nantes.fr/">Ville de Nantes</a>, <a href="http://data.nantes.fr/licence/">licence ODBL</a> &copy;');
+
+        function addLegend() {
+            // Gestion de la légende
+            var legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function (map) {
+
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = myJson.couples,
+                    labels = [],
+                    from, to;
+
+                for (var j = 0; j < grades.length - 1; j++) {
+                    from = grades[j];
+                    to = grades[j + 1];
+
+                    labels.push(
+                        '<i style="background:' + getColor(from) + '"></i> ' +
+                        from + (to ? '&ndash;' + to : '+'));
+                }
+
+                div.innerHTML = labels.join('<br>');
+                return div;
+            };
+
+            legend.addTo(map);
+        }
+        // instantiate the bloodhound suggestion engine
+        var numbers = new Bloodhound({
+            datumTokenizer: function (d) {
+                return Bloodhound.tokenizers.whitespace(d.num);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: [{
+                num: 'one',
+                name: 1
+            }, {
+                num: 'two',
+                name: 2
+            }, {
+                num: 'three',
+                name: 3
+            }, {
+                num: 'four',
+                name: 4
+            }, {
+                num: 'five',
+                name: 5
+            }, {
+                num: 'six',
+                name: 6
+            }, {
+                num: 'seven',
+                name: 7
+            }, {
+                num: 'eight',
+                name: 8
+            }, {
+                num: 'nine',
+                name: 9
+            }, {
+                num: 'ten',
+                name: 10
+            }]
         });
 
-        //geojsonLayer.setStyle(style);
+        // initialize the bloodhound suggestion engine
+        numbers.initialize();
 
-        map.addLayer(geojson);
+        // instantiate the typeahead UI
+        $('.example-numbers .typeahead').typeahead(null, {
+            displayKey: 'num',
+            source: numbers.ttAdapter()
+        }).on('typeahead:opened', onOpened)
+            .on('typeahead:selected', onAutocompleted)
+            .on('typeahead:autocompleted', onSelected);
 
-        map.attributionControl.addAttribution('Population data &copy; <a href="http://census.gov/">US Census Bureau</a>');
+        function onOpened($e) {
+            console.log('opened');
+        }
 
-        var legend = L.control({position: 'bottomright'});
+        function onAutocompleted($e, datum) {
+            console.log('autocompleted');
+            console.log(datum);
+        }
 
-        legend.onAdd = function (map) {
-
-            var div = L.DomUtil.create('div', 'info legend'),
-                grades = [0, 20, 40, 50, 60, 70, 80, 90],
-                labels = [],
-                from, to;
-
-            for (var i = 0; i < grades.length; i++) {
-                from = grades[i];
-                to = grades[i + 1];
-
-                labels.push(
-                    '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                    from + (to ? '&ndash;' + to : '+'));
-            }
-
-            div.innerHTML = labels.join('<br>');
-            return div;
-        };
-
-        legend.addTo(map);
+        function onSelected($e, datum) {
+            console.log('selected');
+            console.log(datum);
+        }
 
     </script>
 
