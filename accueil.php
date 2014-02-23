@@ -8,3 +8,4 @@ De la fréquentation de votre bureau de vote.
     - schéma ci-dessous -
     </h4>
     <img src="images/illu-carte.png" class="accueil-illu">
+    <img src="images/carteElecFace2.svg" class="accueil-illu2">
