@@ -1,10 +1,23 @@
+<?php
+include "titres.php";
+
+
+if (!isset($_GET["include"])) {
+    //echo "Vous avez interrompu votre lecture. A bientôt...";
+    echo "Il manque le titre";
+    exit();
+}
+$titre = $titres[$_GET["include"]];
+
+?>
 
 
 <html lang="fr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>
-        Accueil    </title>
+        <?php echo $titre; ?>
+    </title>
     <link rel="stylesheet" type="text/css" href="css/base.css" />
 </head>
 <body>
@@ -33,16 +46,26 @@
 
 <div id="main">
 
-    <h3>Vous êtes nantais et souhaitez connaitre le nombre vote dans votre bureau ?<br>
-Vous n’aimez pas attendre lorsque vous allez voter ?</br>
-Grace a mobilisez-vous, informez et soyez informe en temps réel 
-De la fréquentation de votre bureau de vote.
-    </h3>
-    <h4>
-    Tout d’abord, munissez vous de votre carte électorale et repérez le numéro de votre bureau de vote.<br>
-    - schéma ci-dessous -
-    </h4>
-    <img src="images/illu-carte.png" class="accueil-illu">
+<?php
+switch ($_GET["include"]) {
+    case "accueil":
+        include ("accueil.php");
+        break;
+    case "frequentation":
+         include ("frequentation.php");
+        break;
+    case  "affluence":
+         include ("affluence.php");
+        break;
+    case  "contribuez":
+         include ("contribuez.php");
+        break;
+    case  "apropos":
+         include ("apropos.php");
+        break;
+}
+?>
+
 </div>
 <!--[if IE]>
 <div id="ie">
