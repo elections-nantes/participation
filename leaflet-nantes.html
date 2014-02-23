@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet Quick Start Guide Example</title>
-	<meta charset="utf-8" />
+    <title>Leaflet Quick Start Guide Example</title>
+    <meta charset="utf-8" />
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <style>
     #map {
-      width: 960px;
+      width: 700px;
       height: 500px;
     }
 
@@ -17,206 +16,351 @@
         stroke: green;
         stroke-width: 1px;
     }
-</style>
+    .info {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+    .info h4 {
+        margin: 0 0 5px;
+        color: #777;
+    }
 
+    .legend {
+        text-align: left;
+        line-height: 18px;
+        color: #555;
+    }
+    .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
+    /* TypeAhead */
+
+    .typeahead,
+    .tt-query,
+    .tt-hint {
+      width: 396px;
+      height: 30px;
+      padding: 8px 12px;
+      font-size: 24px;
+      line-height: 30px;
+      border: 2px solid #ccc;
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      outline: none;
+    }
+
+    .typeahead {
+      background-color: #fff;
+    }
+
+    .typeahead:focus {
+      border: 2px solid #0097cf;
+    }
+
+    .tt-query {
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+         -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .tt-hint {
+      color: #999
+    }
+
+    .tt-dropdown-menu {
+      width: 422px;
+      margin-top: 12px;
+      padding: 8px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 8px;
+         -moz-border-radius: 8px;
+              border-radius: 8px;
+      -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+              box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+
+    .tt-suggestion {
+      padding: 3px 20px;
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .tt-suggestion.tt-cursor {
+      color: #fff;
+      background-color: #0097cf;
+
+    }
+    </style>
 </head>
 <body>
-    <div id="mylist"></div>
-	<div id="map"></div>
+    <div id="map"></div>
+
+
+      <div class="example example-numbers">
+        <div class="demo">
+          <input class="typeahead" type="text" placeholder="numbers (1-10)">
+        </div>
+      </div>
+
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-    <script src="leaflet.ajax.js"></script>
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.0.0/leaflet-omnivore.min.js'></script>
+    <script src="js/simple_statistics.js"></script>
+    <script src="js/chroma.min.js"></script>
+    <script src="js/leaflet.ajax.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/typeahead.bundle.js"></script>
 
-	<script>
-		var initialBounds = new L.latLngBounds(new L.latLng(47.18, -1.64), new L.latLng(47.295, -1.47));
-            map = L.map('map', {
-                center: [47.2375, -1.555],
-                zoom: 12,
-                maxZoom: 16,
-                minZoom: 11,
-                //maxBounds: initialBounds
+    <script type="text/javascript">
+        // Initialisation de l'emprise initiale et de la carte
+        var initialBounds = new L.latLngBounds(new L.latLng(47.18, -1.64), new L.latLng(47.295, -1.47));
+        var map = L.map('map', {
+            center: [47.2375, -1.555],
+            zoom: 12,
+            maxZoom: 16,
+            minZoom: 11
+        });
+
+        // Ajout du fond de carte
+        L.tileLayer('http://{s}.acetate.geoiq.com/tiles/' + 'terrain' + '/{z}/{x}/{y}' + '.png', {
+            //maxZoom: 18,
+            opacity: 0.4,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+        }).addTo(map);
+
+        L.tileLayer('http://{s}.acetate.geoiq.com/tiles/' + 'acetate-labels' + '/{z}/{x}/{y}' + '.png', {
+            //maxZoom: 18,
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+        }).addTo(map);
+
+
+        // Controle permettant d'afficher les informations au survol
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (props) {
+            this._div.innerHTML = (props ? '<h4> Bureau ' + props.IDBURO + ' - Année 2008</h4>' +
+                '<i><b>Adresse</b></i>:' + props.LIEU_SITE + ' ' + props.LIEU_NOM + '<br />' + props.LIEU_ADRES + '<br />' +
+                '<i><b>Nombre de votants</b></i>: ' + props.resultats_2008_municipales_VOT2008 + '<br />' +
+                '<i><b>Nombre d\'inscrits</b></i>: ' + props.resultats_2008_municipales_INS2008 + ' '  + '<br />' +
+                '<i><b>Pourcentage de votants</b></i>: ' + props.resultats_2008_municipales_VOT2008P + '%'
+                : 'Survolez un bureau de vote');
+        };
+
+        info.addTo(map);
+
+        var myJson = {};
+
+        function returnCoupletInfo(d) {
+            for (var i = 0; i < myJson.couples.length - 1; i++) {
+                var couplet = myJson.couples.slice(i, i + 2);
+                var returnValue = {couplet : couplet};
+                if (i < (myJson.couples.length - 2)) {
+                    if (d >= couplet[0] && d < couplet[1]){
+                        returnValue["position"] = i;
+                        return returnValue;
+                    }
+                } else {
+                    couplet = myJson.couples.slice(i, i + 1);
+                        returnValue["position"] = i;
+                        return returnValue;
+                }
+            }
+        };
+
+        // get color depending on population density value
+        function getColor(d) {
+            var valuePosition = returnCoupletInfo(d);
+            var colorRanges = chroma.brewer.OrRd.slice(0,7);
+            var colorRanges = chroma.brewer.Purples.slice(0,7);
+
+            var retour = colorRanges[valuePosition.position];
+            return retour;
+        }
+        function style(feature) {
+            return {
+                weight: 1,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.9,
+                fillColor: getColor(feature.properties.resultats_2008_municipales_VOT2008P)
+            };
+        }
+
+        var geojson;
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 2,
+                color: '#666',
+                dashArray: '',
+                fillOpacity: 0.7
             });
 
-d3.csv("data/geo/centroides-bureaux-votes.csv", function(error, data) {
-//    console.log(data);
-function change() {
-    //
-    var object = this.options[this.selectedIndex].__data__;
-    map.panTo(new L.latLng(object.Y, object.X)).setZoom(16);
-}
+            if (!L.Browser.ie && !L.Browser.opera) {
+                layer.bringToFront();
+            }
 
-d3.select("#mylist").append("select")
-    .on("change", change)
-.selectAll("option").data(data).enter().append("option")
-    .attr("value", function(d){ return d.IDBURO; }) /* Optional */
-    .text(function(d){ return d.IDBURO; })
-
-});
-
-
-
-	
-
-		L.tileLayer('http://{s}.acetate.geoiq.com/tiles/' + 'terrain' + '/{z}/{x}/{y}' + '.png', {
-			//maxZoom: 18,
-            opacity: 0.4,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
-
-
-		L.tileLayer('http://{s}.acetate.geoiq.com/tiles/' + 'acetate-labels' + '/{z}/{x}/{y}' + '.png', {
-			//maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
-
-
-
-
-
-var generateSvgWithGroup = function(customClass) {
-    var el = L.DomUtil.create('div', customClass +' leaflet-zoom-hide');
-    map.getPanes().overlayPane.appendChild(el);
-    var svgEl = d3.select('.' + customClass).append("svg");
-    var group = svgEl.append("g").attr("class", "leaflet-zoom-hide");
-    return {
-        group: group,
-        svg: svgEl    
-    }
-}
-
-
-var mySecondLayer = generateSvgWithGroup('my-custom-layer');
-
-var svg = d3.select(map.getPanes().overlayPane).append("svg"),
-    g = svg.append("g").attr("class", "leaflet-zoom-hide");
-
-
-//d3.json("data/geo/bureaux-votes-nantes.geojson", function(collection) {
-/*
-d3.json("data/geo/bureaux-votes-nantes-points.geojson", function(collection) {
-  var transform = d3.geo.transform({point: projectPoint}),
-      path = d3.geo.path().projection(transform),
-      bounds = path.bounds(collection);
-
-  var feature = g.selectAll("path")
-      .data(collection.features)
-    .enter().append("path");
-
-  map.on("viewreset", reset);
-  reset();
-
-  // Reposition the SVG to cover the features.
-  function reset() {
-    bounds = path.bounds(collection);
-    var topLeft = bounds[0],
-        bottomRight = bounds[1];
-
-    svg .attr("width", bottomRight[0] - topLeft[0])
-        .attr("height", bottomRight[1] - topLeft[1])
-        .style("left", topLeft[0] + "px")
-        .style("top", topLeft[1] + "px");
-
-    g .attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-
-    feature.attr("d", path)
-    .on('mouseover', function(d) {
-        console.log(d.properties['2444004040']);
-    });
-  }
-
-  // Use Leaflet to implement a D3 geometric transformation.
-  function projectPoint(x, y) {
-    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
-    this.stream.point(point.x, point.y);
-  }
-});
-*/
-
-d3.json("data/geo/bureaux-votes-nantes.geojson", function(collection) {
-  var transform1 = d3.geo.transform({point: projectPoint1}),
-      path1 = d3.geo.path().projection(transform1),
-      bounds1 = path1.bounds(collection);
-
-  var feature1 = mySecondLayer.group.selectAll("path")
-      .data(collection.features)
-    .enter().append("path");
-
-  map.on("viewreset", reset);
-  reset(mySecondLayer.svgEl);
-
-  // Reposition the SVG to cover the features.
-  function reset(svg) {
-    bounds1 = path1.bounds(collection);
-    var topLeft = bounds1[0],
-        bottomRight = bounds1[1];
-
-    mySecondLayer.svg.attr("width", bottomRight[0] - topLeft[0])
-        .attr("height", bottomRight[1] - topLeft[1])
-        .style("left", topLeft[0] + "px")
-        .style("top", topLeft[1] + "px")
-//        .attr("fill", "red");
-        .attr("stroke-width", 0.4)
-        .attr("stroke", "black")
-        //.attr("stroke-opacity", 1);
-        .attr("fill-opacity", 0);
-
-
-    mySecondLayer.group.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
-
-
-    feature1.attr("d", path1)
-    /*.on('mouseover', function(d) {
-        console.log(d.properties);
-    });*/
-    .on('click', countyClickHandler);
-
-  /*
-   * Fonction qui permet de zoomer sur la carte
-   * en cliquant sur les départements
-   * Récupéré ici : http://bl.ocks.org/mbostock/2206340
-   */
-  var centered;
-  function countyClickHandler(d) {
-    var x, y, k;
- 
-    if (d && centered !== d) {
-            //var centroid = path.centroid(d);
-            //x = centroid[0];
-            //y = centroid[1];
-            //k = 5;
-            centered = d;
-        } else {
-            //x = width / 2;
-            //y = height / 2;
-            //k = 1;
-            centered = null;
+            info.update(layer.feature.properties);
         }
-        console.log(mySecondLayer.group.selectAll("path"));
-        mySecondLayer.group.selectAll("path")
-            .classed("active", centered && function(d) { return d === centered; });
-        
-        //document.getElementById('contenu').innerHTML = d.properties.IDBURO + " " + d.properties.LIEU_NOM + " " + d.properties.LIEU_SITE + " " + d.properties.LIEU_ADRES;
 
-        /*
-        var trStr = "translate(" + width / 2 + "," + height / 2 + ")" +
-            "scale(" + k + ")translate(" + -x + "," + -y + ")";
-         
-        deps.transition()
-            .duration(1000)
-            .attr("transform", trStr);
-        */
-    };
+        function resetHighlight(e) {
+            geojson.resetStyle(e.target);
+            info.update();
+        }
 
-  }
+        function zoomToFeature(e) {
+            var center = e.target.getBounds()
+                           .getCenter();
+            map.setView(center, 14);
+            //map.fitBounds(e.target.getBounds());
+        }
 
-  // Use Leaflet to implement a D3 geometric transformation.
-  function projectPoint1(x, y) {
-    var point1 = map.latLngToLayerPoint(new L.LatLng(y, x));
-    this.stream.point(point1.x, point1.y);
-  }
-});
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
 
-	</script>
+        // Chargement de la couche GeoJSON
+        L.Util.ajax("data/geo/bureaux-votes-nantes-2008.geojson").then(function(data){
+            var dataPourcents = data.features.map(function(element, index, array) {
+                return element.properties.resultats_2008_municipales_VOT2008P;
+            });
+            var dataPourcents = data.features.map(function(element, index, array) {
+                return element.properties.resultats_2008_municipales_VOT2008P;
+            });
+
+            myJson.couples = ss.jenks(dataPourcents, 7);
+
+            geojson = L.geoJson(data, {
+                style: style,
+                onEachFeature: onEachFeature
+            });
+
+            map.addLayer(geojson);
+
+            addLegend();
+
+        });
+
+        //Ajout des crédits
+        map.attributionControl.addAttribution('Données <a href="http://data.nantes.fr/">Ville de Nantes</a>, <a href="http://data.nantes.fr/licence/">licence ODBL</a> &copy;');
+
+        function addLegend() {
+            // Gestion de la légende
+            var legend = L.control({position: 'bottomright'});
+
+            legend.onAdd = function (map) {
+
+                var div = L.DomUtil.create('div', 'info legend'),
+                    grades = myJson.couples,
+                    labels = [],
+                    from, to;
+
+                for (var j = 0; j < grades.length - 1; j++) {
+                    from = grades[j];
+                    to = grades[j + 1];
+
+                    labels.push(
+                        '<i style="background:' + getColor(from) + '"></i> ' +
+                        from + (to ? '&ndash;' + to : '+'));
+                }
+
+                div.innerHTML = labels.join('<br>');
+                return div;
+            };
+
+            legend.addTo(map);
+        }
+        // instantiate the bloodhound suggestion engine
+        var numbers = new Bloodhound({
+            datumTokenizer: function (d) {
+                return Bloodhound.tokenizers.whitespace(d.num);
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: [{
+                num: 'one',
+                name: 1
+            }, {
+                num: 'two',
+                name: 2
+            }, {
+                num: 'three',
+                name: 3
+            }, {
+                num: 'four',
+                name: 4
+            }, {
+                num: 'five',
+                name: 5
+            }, {
+                num: 'six',
+                name: 6
+            }, {
+                num: 'seven',
+                name: 7
+            }, {
+                num: 'eight',
+                name: 8
+            }, {
+                num: 'nine',
+                name: 9
+            }, {
+                num: 'ten',
+                name: 10
+            }]
+        });
+
+        // initialize the bloodhound suggestion engine
+        numbers.initialize();
+
+        // instantiate the typeahead UI
+        $('.example-numbers .typeahead').typeahead(null, {
+            displayKey: 'num',
+            source: numbers.ttAdapter()
+        }).on('typeahead:opened', onOpened)
+            .on('typeahead:selected', onAutocompleted)
+            .on('typeahead:autocompleted', onSelected);
+
+        function onOpened($e) {
+            console.log('opened');
+        }
+
+        function onAutocompleted($e, datum) {
+            console.log('autocompleted');
+            console.log(datum);
+        }
+
+        function onSelected($e, datum) {
+            console.log('selected');
+            console.log(datum);
+        }
+
+    </script>
+
 </body>
 </html>
 
