@@ -25,13 +25,9 @@
     <img id="bandeau1" src="images/triangle1.svg">
     <img id="bandeau2" src="images/triangle2.svg">
 </header>
-
     <!-- la sidebar -->
-
-
 <div id="main">
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
     <style>
     #map {
       width: 99%;
@@ -140,15 +136,8 @@
 
     <div id="content-side">
     <div id="map"></div>
-    <!--<div class="example example-numbers">
-        <div class="demo">
-          <input class="typeahead" type="text" placeholder="numbers (1-10)">
-        </div>
-      </div>
-    -->
-
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.0.0/leaflet-omnivore.min.js'></script>
     <script src="js/simple_statistics.js"></script>
     <script src="js/chroma.min.js"></script>
@@ -328,71 +317,7 @@
 
             legend.addTo(map);
         }
-/*
-        // instantiate the bloodhound suggestion engine
-        var numbers = new Bloodhound({
-            datumTokenizer: function (d) {
-                return Bloodhound.tokenizers.whitespace(d.num);
-            },
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            local: [{
-                num: 'one',
-                name: 1
-            }, {
-                num: 'two',
-                name: 2
-            }, {
-                num: 'three',
-                name: 3
-            }, {
-                num: 'four',
-                name: 4
-            }, {
-                num: 'five',
-                name: 5
-            }, {
-                num: 'six',
-                name: 6
-            }, {
-                num: 'seven',
-                name: 7
-            }, {
-                num: 'eight',
-                name: 8
-            }, {
-                num: 'nine',
-                name: 9
-            }, {
-                num: 'ten',
-                name: 10
-            }]
-        });
 
-        // initialize the bloodhound suggestion engine
-        numbers.initialize();
-
-        // instantiate the typeahead UI
-        $('.example-numbers .typeahead').typeahead(null, {
-            displayKey: 'num',
-            source: numbers.ttAdapter()
-        }).on('typeahead:opened', onOpened)
-            .on('typeahead:selected', onAutocompleted)
-            .on('typeahead:autocompleted', onSelected);
-
-        function onOpened($e) {
-            console.log('opened');
-        }
-
-        function onAutocompleted($e, datum) {
-            console.log('autocompleted');
-            console.log(datum);
-        }
-
-        function onSelected($e, datum) {
-            console.log('selected');
-            console.log(datum);
-        }
-*/
     </script>
 
 
@@ -400,16 +325,7 @@
 
     </div>
 </div>
-<!--[if IE]>
-<div id="ie">
-Chrome, Firefox ou même Safari mais par pitiée, pas Internet Explorer<br>
-<a href="https://www.google.com/intl/fr_fr/chrome/browser/">Installer Chorme</a><br>
-<a href="http://www.mozilla.org/fr/firefox/new/">Istaller Firefox</a><br>
-</div>
-<![endif]-->
 <footer>
-
 </footer>
-
 </body>
 </html>
